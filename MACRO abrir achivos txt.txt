@@ -1,0 +1,159 @@
+Sub abrir()
+'
+ Application.ScreenUpdating = False
+    
+    
+    Windows("Declaración de Exportaciones (Abrir Archivo).xls").Activate
+    Sheets(Array("Hoja 00", "Hoja 01", "Hoja 02", "Hoja 03")).Select
+    Cells.Select
+    Selection.ClearContents
+    Sheets("...").Select
+    
+    ruta = "D:\Datos\declaracion exportadores\transmision electronica\"
+    iteraciones = Range("g3").Value
+    
+    For vuelta = 1 To iteraciones
+    
+    Range("g5").Select
+    ActiveCell.Offset(vuelta, 0).Range("A1").Select
+
+    archivo = ActiveCell.Value
+    
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'ABRIR ARCHIVO DE TEXTO SEGUN INSTRUCCIONES DE TABLA 00
+    Workbooks.OpenText Filename:= _
+        ruta & archivo, Origin _
+        :=xlMSDOS, StartRow:=1, DataType:=xlFixedWidth, FieldInfo:=Array(Array(0 _
+        , 1), Array(2, 1), Array(8, 1), Array(16, 1), Array(21, 1), Array(26, 9)), _
+        TrailingMinusNumbers:=True
+
+'OPERACION PARA RECONOCER TABLA 00
+    Windows(archivo).Activate
+    Columns("A:A").Select
+    Selection.AutoFilter Field:=1, Criteria1:="<>0", Operator:=xlAnd
+    Rows("2:2").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.ClearContents
+    Selection.AutoFilter
+    Rows("1:1").Select
+    Selection.Copy
+    Windows("Declaración de Exportaciones (Abrir Archivo).xls").Activate
+    Sheets("Hoja 00").Select
+    Range("a1").Select
+    ActiveSheet.Paste
+    Application.CutCopyMode = False
+    
+'CERRAR ARCHIVO TEXTO
+    Windows(archivo).Activate
+    ActiveWindow.Close (False)
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'ABRIR ARCHIVO DE TEXTO SEGUN INSTRUCCIONES DE TABLA 01
+    Workbooks.OpenText Filename:= _
+        ruta & archivo, Origin _
+        :=xlMSDOS, StartRow:=1, DataType:=xlFixedWidth, FieldInfo:=Array(Array(0 _
+        , 1), Array(2, 1), Array(4, 1), Array(6, 1), Array(7, 1), Array(9, 1), Array(17, 1), Array(22 _
+        , 1), Array(24, 1), Array(47, 1), Array(70, 1), Array(71, 1), Array(85, 1), Array(205, 1), _
+        Array(208, 1), Array(233, 1), Array(263, 1), Array(266, 1), Array(269, 1), Array(272, 1), _
+        Array(290, 1), Array(308, 1), Array(326, 1), Array(344, 1), Array(346, 1), Array(350, 1), _
+        Array(351, 1), Array(352, 1), Array(366, 1), Array(381, 1), Array(389, 9)), _
+        TrailingMinusNumbers:=True
+    
+'OPERACION PARA RECONOCER TABLA 01
+    Columns("A:A").Select
+    Selection.AutoFilter
+    Selection.AutoFilter Field:=1, Criteria1:="<>1", Operator:=xlAnd
+    Cells.Select
+    Selection.Delete Shift:=xlUp
+        Range("A1").Select
+    Cells.Select
+    Selection.Copy
+    Windows("Declaración de Exportaciones (Abrir Archivo).xls").Activate
+    Sheets("Hoja 01").Select
+    Range("A1").Select
+    ActiveSheet.Paste
+    Application.CutCopyMode = False
+
+'CERRAR ARCHIVO TEXTO
+    Windows(archivo).Activate
+    ActiveWindow.Close (False)
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'ABRIR ARCHIVO DE TEXTO SEGUN INSTRUCCIONES DE TABLA 02
+    Workbooks.OpenText Filename:= _
+        ruta & archivo, Origin _
+        :=xlMSDOS, StartRow:=1, DataType:=xlFixedWidth, FieldInfo:=Array(Array(0 _
+        , 1), Array(2, 1), Array(10, 1), Array(13, 1), Array(16, 1), Array(34, 1), Array(52, 1), Array(56 _
+        , 1), Array(79, 9)), _
+        TrailingMinusNumbers:=True
+    
+'OPERACION PARA RECONOCER TABLA 02
+    Columns("A:A").Select
+    Selection.AutoFilter
+    Selection.AutoFilter Field:=1, Criteria1:="<>2", Operator:=xlAnd
+    Cells.Select
+    Selection.Delete Shift:=xlUp
+        Range("A1").Select
+    Cells.Select
+    Selection.Copy
+    Windows("Declaración de Exportaciones (Abrir Archivo).xls").Activate
+    Sheets("Hoja 02").Select
+    Range("A1").Select
+    ActiveSheet.Paste
+    Application.CutCopyMode = False
+
+'CERRAR ARCHIVO TEXTO
+    Windows(archivo).Activate
+    ActiveWindow.Close (False)
+    
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'ABRIR ARCHIVO DE TEXTO SEGUN INSTRUCCIONES DE TABLA 03
+    Workbooks.OpenText Filename:= _
+        ruta & archivo, Origin _
+        :=xlMSDOS, StartRow:=1, DataType:=xlFixedWidth, FieldInfo:=Array(Array(0 _
+        , 1), Array(2, 1), Array(10, 1), Array(14, 1), Array(17, 1), Array(35, 1), Array(53, 1), Array(71 _
+        , 1), Array(89, 1), Array(107, 1), Array(125, 1), Array(148, 9)), _
+        TrailingMinusNumbers:=True
+    
+'OPERACION PARA RECONOCER TABLA 03
+    Columns("A:A").Select
+    Selection.AutoFilter
+    Selection.AutoFilter Field:=1, Criteria1:="<>3", Operator:=xlAnd
+    Cells.Select
+    Selection.Delete Shift:=xlUp
+        Range("A1").Select
+    Cells.Select
+    Selection.Copy
+    Windows("Declaración de Exportaciones (Abrir Archivo).xls").Activate
+    Sheets("Hoja 03").Select
+    Range("A1").Select
+    ActiveSheet.Paste
+    Application.CutCopyMode = False
+
+'CERRAR ARCHIVO TEXTO
+    Windows(archivo).Activate
+    ActiveWindow.Close (False)
+
+
+Sheets(Array("Hoja 00", "Hoja 01", "Hoja 02", "Hoja 03")).Select
+    Sheets(Array("Hoja 00", "Hoja 01", "Hoja 02", "Hoja 03")).Copy
+    ActiveWorkbook.SaveAs Filename:= _
+        ruta & archivo & ".xls", _
+        FileFormat:=xlNormal, Password:="", WriteResPassword:="", _
+        ReadOnlyRecommended:=False, CreateBackup:=False
+    ActiveWindow.Close (False)
+
+    Sheets(Array("Hoja 00", "Hoja 01", "Hoja 02", "Hoja 03")).Select
+    Sheets("Hoja 00").Activate
+    Cells.Select
+    Selection.ClearContents
+    Sheets("...").Select
+
+Next vuelta
+
+ Application.ScreenUpdating = True
+End Sub
