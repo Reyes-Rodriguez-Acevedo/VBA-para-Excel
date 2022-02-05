@@ -1,0 +1,167 @@
+Municipalidad_Traer_Datos
+
+Sub Municipalidad_Traer_Datos()
+'
+' Macro1 Macro
+'
+
+'
+'Application.ScreenUpdating = False
+Dim Dato As Range, cod_comuna As Integer, vuelta As Integer, iteraciones As Integer
+Dim ruta As String, ruta_comuna As String, Datos_Comunales As String
+Dim i As Integer
+
+Cells(1, 1).Select
+
+'01 - Abrir Archivos
+     
+ruta_comuna = InputBox("Ingresa la ruta del archivo Datos Comunales:")
+Datos_Comunales = InputBox("Ingresa nombre archivo Datos Comunales Gastos Municipales:")
+    
+    Workbooks.Open Filename:=ruta_comuna & Datos_Comunales, UpdateLinks:=0
+
+'     Workbooks.Open Filename:= _
+        "https://d.docs.live.net/944d5b9328a00097/Proyectos/Data%20intelligence/Brief%20Municipalidades%20Reyes/Datos%20Comunales%20Gastos%20Municipales%20Ley%2020237%20año%202017.xlsx"
+'    Sheets("Variabl Gasto Municipal mar2017").Select
+    
+Dim ws As Worksheet
+For Each ws In ActiveWorkbook.Worksheets
+ws.Visible = xlSheetVisible ' O bien = True
+Next ws
+
+ruta = InputBox("Ingresa la ruta de la carpeta:")
+'    ruta = "C:\Users\rrodriguez\Downloads\3.- GASTOS MENSUALES MARZO 2017\"
+'    Windows(2).Activate
+    Windows("Macro Gastos Municipales.xlsm").Activate
+
+'iteraciones = Sheets(1).Range("B1").Value
+'For vuelta = 1 To iteraciones
+'ActiveCell.Offset(vuelta, 0).Select
+
+With Sheets(1)
+'Determinamos la longitud del rango de datos por los que vayamos a recorrer el blucle (Fin)
+Fin = Application.CountA(.Range("A:A"))
+End With
+'Indicamos que para "i" es igual a 1 (no tenemos datos de cabecera) hasta el final
+For i = 1 To Fin
+Cells(i, 1).Select
+archivo = ActiveCell.Value
+
+    Workbooks.Open Filename:=ruta & archivo, UpdateLinks:=0
+    
+'    Workbooks.Open Filename:= _
+        "C:\Users\rrodriguez\Downloads\3.- GASTOS MENSUALES MARZO 2017\marzo-constitucion-2017.xlsx"
+    
+'02 - Copiar Gasto Municipal
+
+    Sheets("RESUMEN").Select
+    Range("C2").Select
+    cod_comuna = ActiveCell.Value
+    cod_comuna = cod_comuna / 1
+
+If cod_comuna = 8402 Then
+    cod_comuna = 16102
+ElseIf cod_comuna = 8401 Then
+    cod_comuna = 16101
+ElseIf cod_comuna = 8406 Then
+    cod_comuna = 16103
+ElseIf cod_comuna = 8403 Then
+    cod_comuna = 16202
+ElseIf cod_comuna = 8404 Then
+    cod_comuna = 16203
+ElseIf cod_comuna = 8405 Then
+    cod_comuna = 16302
+ElseIf cod_comuna = 8407 Then
+    cod_comuna = 16104
+ElseIf cod_comuna = 5505 Then
+    cod_comuna = 5802
+ElseIf cod_comuna = 8408 Then
+    cod_comuna = 16204
+ElseIf cod_comuna = 8409 Then
+    cod_comuna = 16303
+ElseIf cod_comuna = 5507 Then
+    cod_comuna = 5803
+ElseIf cod_comuna = 8410 Then
+    cod_comuna = 16105
+ElseIf cod_comuna = 8411 Then
+    cod_comuna = 16106
+ElseIf cod_comuna = 8412 Then
+    cod_comuna = 16205
+ElseIf cod_comuna = 8413 Then
+    cod_comuna = 16107
+ElseIf cod_comuna = 5106 Then
+    cod_comuna = 5801
+ElseIf cod_comuna = 8414 Then
+    cod_comuna = 16201
+ElseIf cod_comuna = 8415 Then
+    cod_comuna = 16206
+ElseIf cod_comuna = 8416 Then
+    cod_comuna = 16301
+ElseIf cod_comuna = 8417 Then
+    cod_comuna = 16304
+ElseIf cod_comuna = 8418 Then
+    cod_comuna = 16108
+ElseIf cod_comuna = 8419 Then
+    cod_comuna = 16305
+ElseIf cod_comuna = 8420 Then
+    cod_comuna = 16207
+ElseIf cod_comuna = 5108 Then
+    cod_comuna = 5804
+ElseIf cod_comuna = 8421 Then
+    cod_comuna = 16109
+End If
+
+    Windows(Datos_Comunales).Activate
+'    Windows("Datos Comunales Gastos Municipales Ley 20237 año 2017.xlsx").Activate
+    Sheets(9).Select
+    Columns("C:C").Select
+    
+    
+'Buscamos cod_comuna (cualquier palabra o texto que lo contenga)
+'    With Worksheets("Variabl Gasto Municipal mar2017").Range("C:C")
+With Worksheets(9).Range("C:C")
+    Set Dato = .Find(cod_comuna, LookAt:=xlWhole)
+
+    Selection.Find(What:=Dato, LookAt:=xlWhole).Activate
+    ActiveCell.Offset(0, 3).Activate
+'    Selection.Find(What:="5103", After:=ActiveCell, LookIn:=xlFormulas2, _
+        LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, _
+        MatchCase:=False, SearchFormat:=False).Activate
+   
+End With
+
+    Windows(archivo).Activate
+'    Windows(2).Activate
+'    Windows("marzo-concon-2017.xls").Activate
+    
+'    ActiveWindow.LargeScroll ToRight:=3
+    Range("E2:BW2").Select
+    Selection.Copy
+    
+    Windows(Datos_Comunales).Activate
+'    Windows("Datos Comunales Gastos Municipales Ley 20237 año 2017.xlsx").Activate
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+Application.CutCopyMode = False
+    
+    cod_comuna = 0
+
+
+'03 - Copiar Gasto Salud
+    
+    
+    Windows(archivo).Close (False)
+    
+    Windows("Macro Gastos Municipales.xlsm").Activate
+    
+
+Next i
+'Next vuelta
+    
+'ActiveWorkbook.Close False
+'Application.DisplayAlerts = True
+'Application.ScreenUpdating = True
+'Application.ActiveWindow.Close SaveChanges:=False
+'Application.Quit
+   
+End Sub
